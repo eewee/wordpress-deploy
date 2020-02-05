@@ -1,22 +1,26 @@
 #!/bin/bash
 #
-# Wippy (----WP Installeur----)
+# WP Installeur :
 # Automatize your WordPress installation
 #
 # How to launch "deploy" ?
-# bash deploy.sh sitename "Titre de mon site"
-# $1 = folder name & database name
-# $2 = Site title
+# bash deploy.sh sitename themename "Titre de mon site"
+# bash deploy.sh "wp_astra" "astra" "Titre de mon site"
+# $1 = folder name & database name & suffixe login
+# $2 = theme name (ex: astra)
+# $3 = Site title (ex: Mon site abc)
 
+#---------------------------------------------------------------
+# CONFIG
+#---------------------------------------------------------------
 
-# VARS 
 # admin email
 email="contact@eewee.fr"
 
 # local url login
 # --> Change to fit your server URL model (eg: http://localhost:8888/my-project)
 #url="http://"$1":8888/mon_projet/"
-url="http://localhost:8888/mon_projet/"
+url="http://localhost:8888/"$1"/"
 
 # admin login
 admin="admin-$1"
@@ -27,15 +31,9 @@ pathtoinstall="~/Documents/sites/personnel/mon_projet"
 # path to plugins.txt
 pluginfilepath="~/Documents/sites/personnel/wp_deploy/plugins.txt"
 
-# end VARS ---
-
-
-
-
-#  ===============
-#  = Fancy Stuff =
-#  ===============
-# not mandatory at all
+#---------------------------------------------------------------
+# SCRIPT (ne rien modifier ci-dessous)
+#---------------------------------------------------------------
 
 # Stop on error
 set -e
@@ -68,7 +66,7 @@ function bot {
 
 # Welcome !
 bot "${blue}${bold}Bonjour ! Je suis Wippy.${normal}"
-echo -e "         Je vais installer WordPress pour votre site : ${cyan}$2${normal}"
+echo -e "         Je vais installer WordPress pour votre site : ${cyan}$3${normal}"
 
 # CHECK :  Directory doesn't exist
 # go to wordpress installs folder
@@ -115,7 +113,7 @@ password=${passgen:0:10}
 
 # launch install
 bot "et j'installe !"
-wp core install --url=$url --title="$2" --admin_user=$admin --admin_email=$email --admin_password=$password
+wp core install --url=$url --title="$3" --admin_user=$admin --admin_email=$email --admin_password=$password
 
 # Plugins install
 bot "J'installe les plugins a partir de la liste des plugins :"
@@ -129,7 +127,7 @@ bot "Je telecharge le theme Astra theme :"
 cd wp-content/themes/
 #git clone git@github.com:brainstormforce/astra.git
 git clone https://github.com/brainstormforce/astra.git
-wp theme activate $1
+wp theme activate $2
 
 # Create standard pages
 bot "Je cree les pages habituelles (Accueil, blog, contact...)"
@@ -207,13 +205,9 @@ echo $password | pbcopy
 # That's all ! Install summary
 bot "${green}L'installation est terminee !${normal}"
 line
-echo "URL du site:   $url"
-echo "Login admin :  admin$1"
+echo "URL du site :  $url"
+echo "Login admin :  admin-$1"
 echo -e "Password :  ${cyan}${bold} $password ${normal}${normal}"
 line
 echo -e "${grey}(N'oubliez pas le mot de passe ! Je l'ai copie dans le presse-papier)${normal}"
-
-line
-bot "A Bientot !"
-line
 line
