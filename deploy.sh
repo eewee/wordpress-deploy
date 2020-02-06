@@ -43,10 +43,8 @@ url="http://localhost:8888/"$1"/"
 
 # chemin vers le fichier contenant la liste des plugins a installer (un par ligne)
 #path_plugin_file="~/Documents/sites/personnel/wp_deploy/plugins.txt"
+#path_plugin_file="./wp_deploy/plugins.txt"
 path_plugin_file="/Applications/MAMP/htdocs/wp_deploy/plugins.txt"
-
-
-
 
 #---------------------------------------------------------------
 # SCRIPT CONFIG (ne rien modifier ci-dessous)
@@ -116,6 +114,7 @@ wp core version
 bot "Configuration db :"
 wp core config --dbhost=$dbhost --dbname=$dbname --dbuser=$dbuser --dbpass=$dbpass --dbprefix=$dbprefix --skip-check --extra-php <<PHP
 define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
 PHP
 
 # DB - Creer db
