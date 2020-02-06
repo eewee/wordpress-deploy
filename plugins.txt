@@ -1,1 +1,3 @@
+jetpack
+wordfence
 wordpress-seo

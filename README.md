@@ -1,2 +1,1 @@
-# wordpress-deploy
-Deploy new project Wordpress local.
+bash deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"
