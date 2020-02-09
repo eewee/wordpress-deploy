@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # WP Installeur :
-# Permettre l'installation en local de Wordpress
+# Permettre l'installation en local de Wordpress, avec le theme x, plugin(s) x, etc ...
 #
 # Comment lancer le "deploy" ?
 # bash deploy.sh sitename themename "Titre de mon site"
@@ -16,6 +16,9 @@
 #   deploy.sh
 #   plugins.txt
 #   README.md
+#   
+# Command (lancer a la racine de votre htdocs) :
+# bash ./wp_deploy/deploy.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "titre site"
 
 #---------------------------------------------------------------
 # CONFIG WORDPRESS (a editer avec vos propres informations)
@@ -38,13 +41,22 @@ admin_login="admin-$1"
 # Ex : http://localhost:8888/my-project
 url="http://localhost:8888/"$1"/"
 
+# plugins a installer
+pluginsList=( 
+    "jetpack"
+    #"contact-form-7"
+    #"wordpress-seo"
+)
+
+# idPage
+pageAccueil=4
+pageBlog=5
+
+# date de publication d'un article
+datePublish=$(date -v-120M '+%Y-%m-%d-%H-%M-%S')
+
 # chemin vers votre Wordpress
 #path_to_install_wp="~/Documents/sites/personnel/"$1
-
-# chemin vers le fichier contenant la liste des plugins a installer (un par ligne)
-#path_plugin_file="~/Documents/sites/personnel/wp_deploy/plugins.txt"
-#path_plugin_file="./wp_deploy/plugins.txt"
-path_plugin_file="/Applications/MAMP/htdocs/wp_deploy/plugins.txt"
 
 #---------------------------------------------------------------
 # SCRIPT CONFIG (ne rien modifier ci-dessous)
@@ -76,16 +88,15 @@ function bot {
 #---------------------------------------------------------------
 # SCRIPT EXEC (ne rien modifier ci-dessous)
 #---------------------------------------------------------------
+bot "${blue}${bold}
+#----------------------------------------------------------#
+#------------------ DEBUT INSTALLATION --------------------#
+#----------------------------------------------------------#
+${normal}"
 
 # DISPLAY - Afficher le titre du site Wordpress qui sera installe
 bot "${blue}${bold}Debut de l'installation.${normal}"
 echo -e "Installation Wordpress : ${cyan}$3${normal}"
-
-# CHECK : Directory doesn't exist
-# go to wordpress installs folder
-# --> Change : to wherever you want
-#cd $path_to_install_wp
-#cd "~/Documents/sites/personnel/wp_deploy/"
 
 # CHECK - Verifier si le dossier d'installation existe deja
 if [ -d $1 ]; then
@@ -103,22 +114,22 @@ mkdir $1
 cd $1
 
 # DOWNLOAD WP - Download Wordpress en FR
-bot "Telecharge WordPress"
+bot "DOWNLOAD WORDPRESS."
 wp core download --locale=fr_FR --force
 
 # CHECK - Version du Wordpress telecharge
-bot "Version Wordpress :"
+bot "VERSION WORDPRESS :"
 wp core version
 
 # DB - Configuration db
-bot "Configuration db :"
+bot "CONFIG DB :"
 wp core config --dbhost=$dbhost --dbname=$dbname --dbuser=$dbuser --dbpass=$dbpass --dbprefix=$dbprefix --skip-check --extra-php <<PHP
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 PHP
 
 # DB - Creer db
-bot "Creer db :"
+bot "CREATE DB :"
 wp db create
 
 # PASSWORD - Generer un mot de passe aleatoire
@@ -126,51 +137,50 @@ passgen=`head -c 10 /dev/random | base64`
 password=${passgen:0:10}
 
 # INSTALLER WP - Lancer l'installation
-bot "Installation Wordpress (en cours) :"
+bot "INSTALL WORDPRESS :"
 wp core install --url=$url --title="$3" --admin_user=$admin_login --admin_email=$admin_email --admin_password=$password
 
 # PLUGINS - Lancer l'installation des plugins (depuis le fichier .txt contenant un plugin / ligne)
-bot "Installation plugin (en cours) :"
-while read line || [ -n "$line" ]
+bot "INSTALL PLUGINS :"
+for vPlugin in "${pluginsList[@]}"
 do
-    wp plugin install $line --activate
-    bot "Plugin active : "$line
-done < path_plugin_file
+  bot "PLUGIN : "$vPlugin
+  wp plugin install $vPlugin --activate
+done
 
 # THEME - Telecharger un theme
-bot "Installer theme "$2" :"
-#cd wp-content/themes/
-#git clone https://github.com/brainstormforce/astra.git
-#wp theme activate $2
+bot "INSTALL THEME "$2" :"
 wp theme install $2 --activate
 
 # PAGE - Creer des pages standards
-bot "Creer pages (Accueil, Blog, Contact et Mentions Legales)"
+bot "PAGES CREATE : Accueil, Blog, Contact et Mentions Legales"
 wp post create --post_type=page --post_title='Accueil' --post_status=publish
 wp post create --post_type=page --post_title='Blog' --post_status=publish
 wp post create --post_type=page --post_title='Contact' --post_status=publish
 wp post create --post_type=page --post_title='Mentions Legales' --post_status=publish
 
 # ARTICLE - faker
-bot "Faker articles"
-curl http://loripsum.net/api/5 | wp post generate --post_content --count=5
+bot "ARTICLES CREATE : FAKER"
+#wp post generate --count=10 --post_type=page --post_date=$datePublish
+curl -N http://loripsum.net/api/5 | wp post generate --post_content --count=5  --post_date=$datePublish
 
 # SET - Ajuster homepage et page article
-bot "Selectionner page Accueil et Article"
+bot "CONFIG SET PAGE - Selectionner page Accueil et Article"
 wp option update show_on_front page
-wp option update page_on_front 3
-wp option update page_for_posts 4
+wp option update page_on_front $pageAccueil
+wp option update page_for_posts $pageBlog
 
 # MENU - set
-bot "Je cree le menu principal, assigne les pages, et je lie l'emplacement du theme : "
+bot "CONFIG MENU - Je cree le menu principal, assigne les pages, et je lie l'emplacement du theme : "
 wp menu create "Menu Principal"
 wp menu item add-post menu-principal 3
 wp menu item add-post menu-principal 4
 wp menu item add-post menu-principal 5
+wp menu item add-post menu-principal 6
 #wp menu location assign menu-principal main-menu
 
 # CLEAN - plugin, theme, article d'origine
-bot "Supprimer : plugin 'Hello Dolly', theme par defaut, articles exemples"
+bot "SUPPRIMER : plugin 'Hello Dolly', theme par defaut, articles exemples"
 wp post delete 1 --force # supprime : article + commentaire
 wp post delete 2 --force # supprime : article + commentaire
 wp plugin delete hello
@@ -180,8 +190,11 @@ wp theme delete twentyseventeen
 wp option update blogdescription ''
 
 # PERMALINKS - /%postname%/
-bot "Utiliser permaliens"
-wp rewrite structure "/%postname%/" --hard
+bot "UTILISER PERMALIENS"
+#wp rewrite structure "/%postname%/" --hard
+#wp rewrite flush --hard
+wp option get permalink_structure
+wp option update permalink_structure '/%postname%'
 wp rewrite flush --hard
 
 # CATEG & TAG - update
@@ -189,12 +202,10 @@ wp option update category_base theme
 wp option update tag_base sujet
 
 # GIT - init
-# REQUIRED : download Git at http://git-scm.com/downloads
-bot "GIT init + commit :"
-#cd ../
-git init    # git project
-git add -A  # Add all untracked files
-git commit -m "Initial commit"   # Commit changes
+bot "GIT INIT + COMMIT :"
+git init
+git add -A
+git commit -m "Initial commit" > /dev/null 2>&1
 
 # Open the stuff
 #bot "Je lance le navigateur, Sublime Text et le finder."
@@ -217,10 +228,9 @@ echo $password | pbcopy
 
 # FIN
 bot "${green}Installation terminee !${normal}"
-line
-echo "URL du site :  $url"
-echo "Login admin :  admin-$1"
-echo -e "Password :  ${cyan}${bold} $password ${normal}${normal}"
+echo "URL du site : $url"
+echo "Login admin : admin-$1"
+echo -e "Password :   ${cyan}${bold} $password ${normal}${normal}"
 line
 echo -e "${grey}(NB : mot de passe dans le presse-papier)${normal}"
 line

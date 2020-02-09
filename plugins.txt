@@ -1,3 +1,0 @@
-jetpack
-wordfence
-wordpress-seo

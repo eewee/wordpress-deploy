@@ -2,6 +2,17 @@ bash deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"
 
 # WP-CLI :
 
+## MAINTENANCE
+
+// Activer le mode maintenance :
+wp maintenance-mode activate
+
+// Desactiver le mode maintenance :
+wp maintenance-mode deactivate
+
+// Voir le statut du mode maintenance :
+wp maintenance-mode status
+
 ## PLUGIN
 
 // Uninstall le plugin "hello" :
