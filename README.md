@@ -57,7 +57,9 @@ Fichier "/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf", ajoutez :
 # .htaccess
 
 Supposant que votre_projet se trouve dans le dossier htdocs de MAMP.
+
 Lorsque vous allez récupérer le projet distant via un "make import" et "make dbimport", alors vous devrez ajuster le .htaccess.
+
 Pour cela changez le "RewriteBase /" par "RewriteBase /votre_projet/"
 
 # WP-CLI (exemple de commande) :
