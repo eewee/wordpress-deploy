@@ -1,4 +1,8 @@
+# Ce placer à la racine de votre projet (avec un dossier wp_deploy contenant ce repository) :
 bash deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"
+
+Ex : 
+bash ./wp_deploy/deploy.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"
 
 # WP-CLI :
 
