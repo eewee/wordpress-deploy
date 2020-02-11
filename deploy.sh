@@ -6,9 +6,9 @@
 # Comment lancer le "deploy" ?
 # bash deploy.sh sitename themename "Titre de mon site"
 # bash deploy.sh "wp_astra" "astra" "Titre de mon site"
-# $1 = "nom du dossier" & "nom de la db" & "suffixe login"
+# $1 = "nom du dossier" & "nom de la db" & "suffixe login" (ex: wp_astra)
 # $2 = "nom du theme" (ex: astra)
-# $3 = "titre du site" (ex: Lorem ipsum)
+# $3 = "titre du site" (ex: Titre de mon site)
 # 
 # Arbo :
 # wp_deploy
@@ -54,9 +54,6 @@ pageBlog=5
 
 # date de publication d'un article
 datePublish=$(date -v-120M '+%Y-%m-%d-%H-%M-%S')
-
-# chemin vers votre Wordpress
-#path_to_install_wp="~/Documents/sites/personnel/"$1
 
 #---------------------------------------------------------------
 # SCRIPT CONFIG (ne rien modifier ci-dessous)
@@ -162,7 +159,7 @@ wp post create --post_type=page --post_title='Mentions Legales' --post_status=pu
 # ARTICLE - faker
 bot "ARTICLES CREATE : FAKER"
 #wp post generate --count=10 --post_type=page --post_date=$datePublish
-curl -N http://loripsum.net/api/5 | wp post generate --post_content --count=5  --post_date=$datePublish
+curl -N http://loripsum.net/api/5 | wp post generate --post_content --count=5 --post_date=$datePublish
 
 # SET - Ajuster homepage et page article
 bot "CONFIG SET PAGE - Selectionner page Accueil et Article"
