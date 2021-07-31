@@ -181,9 +181,9 @@ bot "SUPPRIMER : plugin 'Hello Dolly', theme par defaut, articles exemples"
 wp post delete 1 --force # supprime : article + commentaire
 wp post delete 2 --force # supprime : article + commentaire
 wp plugin delete hello
-wp theme delete twentytwelve
 wp theme delete twentynineteen
-wp theme delete twentyseventeen
+wp theme delete twentytwenty
+wp theme delete twentytwentyone
 wp option update blogdescription ''
 
 # PERMALINKS - /%postname%/
