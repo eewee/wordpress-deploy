@@ -2,10 +2,28 @@
 
 Ce placer à la racine de votre projet, avec un dossier wp_deploy contenant ce repository :
 
-bash ./wp_deploy/deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"
+`bash ./wp_deploy/deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"`
 
 Ex : 
-bash ./wp_deploy/deploy.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"
+`bash ./wp_deploy/deploy.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"`
+
+# CodeAnyWhere :
+
+Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez déployer un site Wordpress avec le script `deploy_codeanywhere.sh`
+
+1. Pour cela créer un projet PHP sur CodeAnyWhere.
+1. Installer wp-cli
+   1. `curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar`
+   1. `chmod +x wp-cli.phar`
+   1. `sudo mv wp-cli.phar /usr/local/bin/wp`
+   1. `wp --info`
+1. `mkdir deploy`
+1. `cd deploy`
+1. Clonez ce projet
+1. `bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"`
+1. Connectez-vous à l'admin Wordpress.
+1. Réglages / Permaliens
+1. Sauvegarder (cela va generer le fichier `.htaccess`)
 
 # Config SSH :
 
@@ -14,16 +32,16 @@ Serveur distant :
 1. Dans le dossier .ssh (créé ci-dessus), ajouter un fichier authorized_keys (chmod600)
 
 Machine locale (Créer une key SSH) :
-1. cd ~/.ssh
-1. ssh-keygen -t rsa -C “your_email@tld.com” -b 4096
+1. `cd ~/.ssh`
+1. `ssh-keygen -t rsa -C “your_email@tld.com” -b 4096`
 1. Copier le contenu de la key public (ex: ionos.pub)
 
 Serveur distant :
 1. Coller le contenu de la key public de votre machine local, dans /.ssh/authorized_keys
 
 Machine locale (Créer une key SSH) :
-1. cd /votre_projet
-1. ssh-add ~/.ssh/ionos
+1. `cd /votre_projet`
+1. `ssh-add ~/.ssh/ionos`
 1. Tester le bon fonctionnement (toujours depuis /votre_projet) : 
     * ssh u12341234@home123456789.1and1-data.host ls 
     * (On doit avoir le rendu sans devoir indiquer le mot de passe ssh)
@@ -34,7 +52,7 @@ NB :
 # Config VHOST + MAMP :
 
 Fichier "hosts", ajoutez :
-1. 127.0.0.1 votre_projet.dev
+1. `127.0.0.1 votre_projet.dev`
 
 Fichier "/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf", ajoutez :
 1. En haut du fichier (Une seule fois) :
