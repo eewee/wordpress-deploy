@@ -20,10 +20,21 @@ Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez dépl
 1. `mkdir deploy`
 1. `cd deploy`
 1. Clonez ce projet
+1. mv wp-cli.yml ../
 1. `bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"`
 1. Connectez-vous à l'admin Wordpress.
 1. Réglages / Permaliens
 1. Sauvegarder (cela va generer le fichier `.htaccess`)
+
+On dispose alors d'un dossier `/deploy` avec l'ensemble du repository à l'intérieur (sauf le fichier `wp-cli.yml` qu'on a déplacé à la racine, au même niveau que `/deploy`). Le Wordpress sera installé à la racine.
+
+Ce qui donnera : 
+- `/deploy`
+- `wp-cli.yml`
+- `wp-admin`
+- `wp-content`
+- `wp-includes`
+- etc ...
 
 # Config SSH :
 
