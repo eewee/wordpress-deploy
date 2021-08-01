@@ -225,8 +225,9 @@ echo $password | pbcopy
 
 # FIN
 bot "${green}Installation terminee !${normal}"
-echo "URL du site : $url"
-echo "Login admin : admin-$1"
+echo "URL du site (front): $url"
+echo "URL du site (back) : $url/wp-admin"
+echo "Login admin        : admin-$1"
 echo -e "Password :   ${cyan}${bold} $password ${normal}${normal}"
 line
 echo -e "${grey}(NB : mot de passe dans le presse-papier)${normal}"
