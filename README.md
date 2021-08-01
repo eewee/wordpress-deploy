@@ -1,7 +1,12 @@
 # Comment lancer une installation ?
 
-Ce placer à la racine de votre projet, avec un dossier wp_deploy contenant ce repository :
+Ce placer à la racine de votre projet, avec un dossier `wp_deploy` contenant ce repository **ET** déplacer juste le fichier `wp-cli.yml` à la racine :
 
+Ce qui donnera : 
+- `/deploy`
+- `wp-cli.yml`
+
+Executer :
 `bash ./wp_deploy/deploy.sh "nom_de_votre_dossier_et_db" "nom_du_theme" "Titre de mon site"`
 
 Ex : 
