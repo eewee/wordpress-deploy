@@ -3,7 +3,7 @@
 Ce placer à la racine de votre projet, avec un dossier `wp_deploy` contenant ce repository **ET** déplacer juste le fichier `wp-cli.yml` à la racine :
 
 Ce qui donnera : 
-- `/deploy`
+- `/wp_deploy`
 - `wp-cli.yml`
 
 Executer :
@@ -22,8 +22,8 @@ Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez dépl
    1. `chmod +x wp-cli.phar`
    1. `sudo mv wp-cli.phar /usr/local/bin/wp`
    1. `wp --info`
-1. `mkdir deploy`
-1. `cd deploy`
+1. `mkdir wp_deploy`
+1. `cd wp_deploy`
 1. Clonez ce projet
 1. mv wp-cli.yml ../
 1. `bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"`
@@ -34,7 +34,7 @@ Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez dépl
 On dispose alors d'un dossier `/deploy` avec l'ensemble du repository à l'intérieur (sauf le fichier `wp-cli.yml` qu'on a déplacé à la racine, au même niveau que `/deploy`). Le Wordpress sera installé à la racine.
 
 Ce qui donnera : 
-- `/deploy`
+- `/wp_deploy`
 - `wp-cli.yml`
 - `wp-admin`
 - `wp-content`
