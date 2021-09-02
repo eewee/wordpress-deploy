@@ -40,7 +40,7 @@ admin_login="admin-$1"
 # local url login (ex : http://projectname-user.codeanyapp.com)
 codeanywhere_user="ewe";
 codeanywhere_projectname="wp";
-url="https://${codeanywhere_projectname}-${codeanywhere_user}.codeanyapp.com"
+url="http://${codeanywhere_projectname}-${codeanywhere_user}.codeanyapp.com"
 
 # plugins a installer
 pluginsList=( 
