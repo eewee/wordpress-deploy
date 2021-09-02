@@ -14,6 +14,20 @@ Ex :
 
 # CodeAnyWhere :
 
+## Installation rapide
+```
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+wp --info
+mkdir wp_deploy
+cd wp_deploy
+git clone git@github.com:eewee/wordpress-deploy.git .
+mv wp-cli.yml ../
+bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site" "wp" "ewe"
+```
+
+## Explication 
 Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez déployer un site Wordpress avec le script `deploy_codeanywhere.sh`
 
 1. Pour cela créer un projet PHP sur CodeAnyWhere.
@@ -26,7 +40,7 @@ Si vous utilisez [CodeAnyWhere.com](https://codeanywhere.com), vous pouvez dépl
 1. `cd wp_deploy`
 1. Clonez ce projet
 1. mv wp-cli.yml ../
-1. `bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site"`
+1. `bash deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "Titre site" "wp" "ewe"`
 1. Connectez-vous à l'admin Wordpress.
 1. Réglages / Permaliens
 1. Sauvegarder (cela va generer le fichier `.htaccess`)
