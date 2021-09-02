@@ -4,21 +4,25 @@
 # Permettre l'installation en local de Wordpress, avec le theme x, plugin(s) x, etc ...
 #
 # Comment lancer le "deploy" ?
-# bash deploy.sh sitename themename "Titre de mon site"
-# bash deploy.sh "wp_astra" "astra" "Titre de mon site"
+# bash deploy.sh sitename themename "Titre de mon site" "wp" "ewe"
+# bash deploy.sh "wp_astra" "astra" "Titre de mon site" "wp" "ewe"
 # $1 = "nom du dossier" & "nom de la db" & "suffixe login" (ex: wp_astra)
 # $2 = "nom du theme" (ex: astra)
 # $3 = "titre du site" (ex: Titre de mon site)
+# $4 = project name (in codeanywhere)
+# $5 = user    name (in codeanywhere)
 # 
 # Arbo :
 # wp_deploy
 #   .gitignore
+#   deploy_codeanywhere.sh
 #   deploy.sh
 #   plugins.txt
 #   README.md
+# wp-cli.yml
 #   
 # Command (lancer a la racine de votre htdocs) :
-# bash ./wp_deploy/deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "titre site"
+# bash ./wp_deploy/deploy_codeanywhere.sh wp_astra_$(date +'%Y-%m-%d_%H-%m-%s') astra "titre site" "wp" "ewe"
 
 #---------------------------------------------------------------
 # CONFIG WORDPRESS (a editer avec vos propres informations)
@@ -38,8 +42,8 @@ admin_email="contact@eewee.fr"
 admin_login="admin-$1"
 
 # local url login (ex : http://projectname-user.codeanyapp.com)
-codeanywhere_user="ewe";
-codeanywhere_projectname="wp";
+codeanywhere_projectname=$4;
+codeanywhere_user=$5;
 url="http://${codeanywhere_projectname}-${codeanywhere_user}.codeanyapp.com"
 
 # plugins a installer
