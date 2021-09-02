@@ -37,10 +37,10 @@ admin_email="contact@eewee.fr"
 # admin login
 admin_login="admin-$1"
 
-# local url login
-# Ex : http://localhost:8888/my-project
-#url="http://localhost/"$1"/"
-url="http://php-eewee.codeanyapp.com"
+# local url login (ex : http://projectname-user.codeanyapp.com)
+codeanywhere_user="ewe";
+codeanywhere_projectname="wp";
+url="https://${codeanywhere_projectname}-${codeanywhere_user}.codeanyapp.com"
 
 # plugins a installer
 pluginsList=( 
