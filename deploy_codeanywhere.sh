@@ -10,7 +10,11 @@
 # $2 = "nom du theme" (ex: astra)
 # $3 = "titre du site" (ex: Titre de mon site)
 # $4 = project name (in codeanywhere)
-# $5 = user    name (in codeanywhere)
+#    https://ide.codeanywhere.com/xxx-yyy/#/home/cabox/workspace
+#    "xxx" is the name of your project
+# $5 = user name (in codeanywhere)
+#    https://ide.codeanywhere.com/xxx-yyy/#/home/cabox/workspace
+#    "yyy" is the name of your project
 # 
 # Arbo :
 # wp_deploy
